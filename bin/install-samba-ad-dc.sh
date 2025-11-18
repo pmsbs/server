@@ -10,8 +10,8 @@ systemctl mask smbd nmbd winbind
 systemctl unmask samba-ad-dc
 systemctl enable samba-ad-dc
 
-# backup original smb.conf
-mv /etc/samba/smb.conf /etc/samba/smb.conf.orig
+# remove original smb.conf
+rm /etc/samba/smb.conf
 
 # provision the samba AD DC
 sudo samba-tool domain provision --domain PMSBS --realm=PMSBS.LOCAL --server-role=dc --use-rfc2307 --dns-backend=SAMBA_INTERNAL
@@ -26,6 +26,9 @@ systemctl disable --now systemd-resolved
 
 # krb5.conf setup
 cp -f /var/lib/samba/private/krb5.conf /etc/krb5.conf
+
+mv /etc/samba/smb.conf /etc/samba/smb.conf.orig
+ln -s "$(pwd)/config/smb.conf" /etc/samba/smb.conf
 
 # start the samba-ad-dc service
 systemctl start samba-ad-dc
