@@ -6,3 +6,4 @@
 . ./bin/install-cockpit.sh
 . ./bin/install-samba.sh
 . ./bin/install-cloudflare.sh
+. ./bin/install-docker.sh
